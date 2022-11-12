@@ -3,11 +3,11 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/footer";
 import Detail from "./components/Detail";
 import Contact from "./components/Contact";
-import About from "./components/About";
 import News from "./components/News";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import AddNews from "./components/AddNews";
+import TopNews from "./components/About";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -36,8 +36,8 @@ function App() {
           path="/detail/:id"
           element={<Detail idPlayer={idPlayer} />}
         ></Route>
-        <Route path="/contact" element={<Contact />}></Route>
-        <Route path="/about" element={<About />}></Route>
+        <Route path="/contact" element={<Contact />}/>
+        <Route path="/topnews" element={<TopNews />}/>
       </Routes>
 
       <Footer />

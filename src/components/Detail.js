@@ -1,16 +1,9 @@
-import { useParams } from "react-router-dom";
-import { ListOfFilms } from "../lists/ListOfFilms";
 import React from "react";
 import { useState, useEffect } from "react";
-import { ModalCase } from "./ModalCase";
 
 export default function Details({ idPlayer }) {
-  const userName = useParams();
   const [APIData, setAPIData] = useState([]);
-  const film = ListOfFilms.find((obj) => {
-    return obj.id === userName.id;
-  });
-  const [isOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
     fetch(`https://636f06a5f2ed5cb047d39abd.mockapi.io/news/${idPlayer}`, {
       method: "GET",
@@ -21,7 +14,9 @@ export default function Details({ idPlayer }) {
       })
       .catch((error) => console.log(error.message));
   }, []);
+
   console.log(APIData);
+
   return (
     <header>
       <div

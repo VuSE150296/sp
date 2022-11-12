@@ -230,7 +230,7 @@ function AddNews({ idPlayer, setIdPlayer }) {
                     />
                     <Field
                       name="description"
-                      type="text"
+                      type="textarea"
                       as={TextField}
                       variant="outlined"
                       color="primary"

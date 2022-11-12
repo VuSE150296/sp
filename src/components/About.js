@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function About() {
+export default function TopNews() {
     return (
         <div class='about-container'>
             <div class='about-field'>
