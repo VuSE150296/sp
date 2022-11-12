@@ -15,7 +15,7 @@ export default function Details({ idPlayer }) {
   });
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
-    fetch(`https://636e5dac182793016f3ec699.mockapi.io/news/${idPlayer}`, {
+    fetch(`https://636f06a5f2ed5cb047d39abd.mockapi.io/news/${idPlayer}`, {
       method: "GET",
     })
       .then((res) => res.json())
@@ -24,29 +24,22 @@ export default function Details({ idPlayer }) {
       })
       .catch((error) => console.log(error.message));
   }, []);
-
+  console.log(APIData);
   return (
     <header>
       <div
         className="product-card"
         style={{ backgroundColor: theme.backgroundColor, color: theme.color }}
       >
-        <div>
+        <div className="detail-content-header">
           <nav className="product-tumb">
-            <img src={APIData.image} />
+            <img src={APIData.img} alt="" />
+            <span className="info">{APIData.views} views</span>
           </nav>
-        </div>
-        <div className="trailer">
-          <a
-            onClick={() => setIsOpen(true)}
-            className="btn-floating waves-effect"
-          >
-            <span class="material-icons">ondemand_video</span>
-          </a>
-          {isOpen && <ModalCase setIsOpen={setIsOpen} film={APIData} />}
         </div>
         <div className="product-titile">
           <h2>{APIData.title}</h2>
+          <h5>{APIData.description}</h5>
           <div className="product-content">{APIData.content}</div>
         </div>
       </div>

@@ -4,11 +4,10 @@ import Footer from "./components/footer";
 import Detail from "./components/Detail";
 import Contact from "./components/Contact";
 import About from "./components/About";
-import Film from "./components/Film";
-import { Routes, Route } from "react-router-dom";
 import News from "./components/News";
+import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import AddFilm from "./components/AddFilm";
+import AddNews from "./components/AddNews";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -21,7 +20,7 @@ function App() {
           path="/"
           exact
           element={
-            <Film
+            <News
               setIdPlayer={setIdPlayer}
               loading={loading}
               setLoading={setLoading}
@@ -29,9 +28,9 @@ function App() {
           }
         ></Route>
         <Route
-          path="/addFilm"
+          path="/addNews"
           exact
-          element={<AddFilm idPlayer={idPlayer} setIdPlayer={setIdPlayer} />}
+          element={<AddNews idPlayer={idPlayer} setIdPlayer={setIdPlayer} />}
         ></Route>
         <Route
           path="/detail/:id"
@@ -39,7 +38,6 @@ function App() {
         ></Route>
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/about" element={<About />}></Route>
-        <Route path="/news" element={<News />}></Route>
       </Routes>
 
       <Footer />
