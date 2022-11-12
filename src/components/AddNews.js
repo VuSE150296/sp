@@ -5,11 +5,11 @@ import { storeImageToFireBase } from "../utils/storeImageToFirebase.";
 import axios from "axios";
 import { object, string } from "yup";
 
-function AddFilm({ idPlayer, setIdPlayer }) {
+function AddNews({ idPlayer, setIdPlayer }) {
   const [loading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [imageFront, setImageFront] = useState(null);
+  const [imgFront, setImgFront] = useState(null);
   console.log(idPlayer);
   useEffect(
     () => {
@@ -19,13 +19,13 @@ function AddFilm({ idPlayer, setIdPlayer }) {
           setIsLoading(false);
           return;
         }
-        const { isSuccess, imageUrl, message } = await storeImageToFireBase(
+        const { isSuccess, imgUrl, message } = await storeImageToFireBase(
           selectedFile
         );
         if (isSuccess) {
-          setImageFront(imageUrl);
+          setImgFront(imgUrl);
           setIsLoading(false);
-          return imageUrl;
+          return imgUrl;
         } else {
           console.log(message);
         }
@@ -46,7 +46,7 @@ function AddFilm({ idPlayer, setIdPlayer }) {
   const [APIData, setAPIData] = useState(null);
   useEffect(() => {
     idPlayer &&
-      fetch(`https://636e5dac182793016f3ec699.mockapi.io/news/${idPlayer}`, {
+      fetch(`https://636f06a5f2ed5cb047d39abd.mockapi.io/news/${idPlayer}`, {
         method: "GET",
       })
         .then((res) => res.json())
@@ -60,15 +60,12 @@ function AddFilm({ idPlayer, setIdPlayer }) {
     if (APIData !== null) {
       axios({
         method: "PUT",
-        url: `https://636e5dac182793016f3ec699.mockapi.io/news/${idPlayer}`,
-        data:
-          imageFront !== null
-            ? { ...values, image: imageFront }
-            : { ...values },
+        url: `https://636f06a5f2ed5cb047d39abd.mockapi.io/news/${idPlayer}`,
+        data: imgFront !== null ? { ...values, img: imgFront } : { ...values },
       })
         .then((res) => {
           console.log(res);
-          setImageFront(null);
+          setImgFront(null);
           setLoading(false);
           setAPIData(null);
           setIdPlayer(null);
@@ -83,12 +80,12 @@ function AddFilm({ idPlayer, setIdPlayer }) {
     } else {
       axios({
         method: "POST",
-        url: "https://636a5e61b10125b78fd9321f.mockapi.io/db",
-        data: { ...values, image: imageFront },
+        url: "https://636f06a5f2ed5cb047d39abd.mockapi.io/news",
+        data: { ...values, img: imgFront },
       })
         .then((res) => {
           console.log(res);
-          setImageFront(null);
+          setImgFront(null);
           setLoading(false);
           alert("success");
         })
@@ -103,20 +100,22 @@ function AddFilm({ idPlayer, setIdPlayer }) {
   const users =
     APIData !== null
       ? {
-          image: APIData.image,
+          img: APIData.img,
           title: APIData.title,
-          year: APIData.year,
-          nation: APIData.nation,
-          des: APIData.des,
-          clip: APIData.clip,
+          description: APIData.description,
+          content: APIData.content,
+          views: APIData.views,
+          status: APIData.status,
+          attractive: APIData.attractive,
         }
       : {
-          image: "",
+          img: "",
           title: "",
-          year: "",
-          nation: "",
-          des: "",
-          clip: "",
+          description: "",
+          content: "",
+          views: 1,
+          status: "false",
+          attractive: "false",
         };
 
   return (
@@ -127,11 +126,11 @@ function AddFilm({ idPlayer, setIdPlayer }) {
         <div className="white_box_5">
           <div className="profile_info">
             <div className="Container_info">
-              <h2>Add Film</h2>
-              {imageFront !== null ? (
+              <h2>Add News</h2>
+              {imgFront !== null ? (
                 <img
                   className="profile_card"
-                  src={imageFront}
+                  src={imgFront}
                   alt=""
                   style={{ width: "500px" }}
                 />
@@ -139,7 +138,7 @@ function AddFilm({ idPlayer, setIdPlayer }) {
                 APIData !== null && (
                   <img
                     className="profile_card"
-                    src={APIData.image}
+                    src={APIData.img}
                     alt=""
                     style={{ width: "500px" }}
                   />
@@ -170,7 +169,7 @@ function AddFilm({ idPlayer, setIdPlayer }) {
                     <input
                       type="file"
                       name="profileImageUrl"
-                      accept="image/*"
+                      accept="img/*"
                       onChange={onSelectFile}
                       id="upload"
                       className="btn"
@@ -192,18 +191,12 @@ function AddFilm({ idPlayer, setIdPlayer }) {
                   title: string()
                     .required("Please enter title")
                     .min(2, "title too short"),
-                  year: string()
-                    .required("Please enter year")
-                    .min(2, "title too year"),
-                  nation: string()
-                    .required("Please enter nation")
-                    .min(2, "nation too short"),
-                  des: string()
-                    .required("Please enter des")
-                    .min(2, "des too short"),
-                  clip: string()
-                    .required("Please enter clip")
-                    .min(2, "clip too short"),
+                  description: string()
+                    .required("Please enter description")
+                    .min(2, "description too short"),
+                  content: string()
+                    .required("Please enter content")
+                    .min(2, "content too short"),
                 })}
                 onSubmit={(values, formikHelpers) => {
                   onSubmit(values, formikHelpers);
@@ -223,49 +216,35 @@ function AddFilm({ idPlayer, setIdPlayer }) {
                       helperText={Boolean(touched.title) && errors.title}
                     />
                     <Field
-                      name="year"
+                      name="content"
                       type="text"
                       as={TextField}
                       variant="outlined"
                       color="primary"
-                      label="year"
+                      label="content"
                       fullWidth
-                      error={Boolean(errors.year) && Boolean(touched.year)}
-                      helperText={Boolean(touched.year) && errors.year}
+                      error={
+                        Boolean(errors.content) && Boolean(touched.content)
+                      }
+                      helperText={Boolean(touched.content) && errors.content}
                     />
                     <Field
-                      name="nation"
+                      name="description"
                       type="text"
                       as={TextField}
                       variant="outlined"
                       color="primary"
-                      label="nation"
+                      label="description"
                       fullWidth
-                      error={Boolean(errors.nation) && Boolean(touched.nation)}
-                      helperText={Boolean(touched.nation) && errors.nation}
+                      error={
+                        Boolean(errors.description) &&
+                        Boolean(touched.description)
+                      }
+                      helperText={
+                        Boolean(touched.description) && errors.description
+                      }
                     />
-                    <Field
-                      name="des"
-                      type="text"
-                      as={TextField}
-                      variant="outlined"
-                      color="primary"
-                      label="des"
-                      fullWidth
-                      error={Boolean(errors.des) && Boolean(touched.des)}
-                      helperText={Boolean(touched.des) && errors.des}
-                    />
-                    <Field
-                      name="clip"
-                      type="text"
-                      as={TextField}
-                      variant="outlined"
-                      color="primary"
-                      label="URL-clip"
-                      fullWidth
-                      error={Boolean(errors.clip) && Boolean(touched.clip)}
-                      helperText={Boolean(touched.clip) && errors.clip}
-                    />
+
                     <div
                       style={{
                         display: "flex",
@@ -307,4 +286,4 @@ function AddFilm({ idPlayer, setIdPlayer }) {
   );
 }
 
-export default AddFilm;
+export default AddNews;

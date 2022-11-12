@@ -37,6 +37,55 @@ function Navigation({ loading, setLoading }) {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              <li>
+                <Link className="active" to={""}>
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to={"about"}>About</Link>
+              </li>
+              <li>
+                <Link to={"contact"}>Contact</Link>
+              </li>
+              {isLogin ? (
+                <>
+                  <li>
+                    <Link
+                      to="#"
+                      onClick={() => {
+                        localStorage.removeItem("userLogin");
+                        setLoading(true);
+                      }}
+                    >
+                      LOGOUT
+                    </Link>
+                  </li>
+                  <img
+                    src={isLogin.imageUrl}
+                    alt=""
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "50%",
+                    }}
+                  />
+                </>
+              ) : (
+                <LoginGoogle setLoading={setLoading} />
+              )}
+            </ul>
+          </nav>
+        </div>
+        <div style={{ position: "relative" }}>
+          <a
+            className="switch-mode"
+            href="#"
+            onClick={toggle}
+            style={{
+              backgroundColor: theme.backgroundColor,
+              color: theme.color,
+              outline: "none",
             }}
           >
             NEWS
