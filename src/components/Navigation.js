@@ -37,62 +37,13 @@ function Navigation({ loading, setLoading }) {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
-              <li>
-                <Link className="active" to={""}>
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to={"about"}>About</Link>
-              </li>
-              <li>
-                <Link to={"contact"}>Contact</Link>
-              </li>
-              {isLogin ? (
-                <>
-                  <li>
-                    <Link
-                      to="#"
-                      onClick={() => {
-                        localStorage.removeItem("userLogin");
-                        setLoading(true);
-                      }}
-                    >
-                      LOGOUT
-                    </Link>
-                  </li>
-                  <img
-                    src={isLogin.imageUrl}
-                    alt=""
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      borderRadius: "50%",
-                    }}
-                  />
-                </>
-              ) : (
-                <LoginGoogle setLoading={setLoading} />
-              )}
-            </ul>
-          </nav>
-        </div>
-        <div style={{ position: "relative" }}>
-          <a
-            className="switch-mode"
-            href="#"
-            onClick={toggle}
-            style={{
-              backgroundColor: theme.backgroundColor,
-              color: theme.color,
-              outline: "none",
             }}
           >
             NEWS
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <NavLink style={{ textDecoration: "none" }}>
+            <NavLink to={"/"} style={{ textDecoration: "none" }}>
               <Button sx={{ my: 2, color: "white", display: "block" }}>
                 Home
               </Button>
@@ -102,13 +53,13 @@ function Navigation({ loading, setLoading }) {
                 Top News
               </Button>
             </NavLink>
-            <NavLink style={{ textDecoration: "none" }}>
+            <NavLink to={"contact"} style={{ textDecoration: "none" }}>
               <Button sx={{ my: 2, color: "white", display: "block" }}>
                 Contact
               </Button>
             </NavLink>
             {isLogin && (
-              <NavLink style={{ textDecoration: "none" }}>
+              <NavLink to={"addNews"} style={{ textDecoration: "none" }}>
                 <Button sx={{ my: 2, color: "white", display: "block" }}>
                   Add
                 </Button>
